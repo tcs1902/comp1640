@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Contribution'}, {text: 'Detail'}] %}
+
+{% block title %}Contribution{% endblock %}
+{% block subheader_title %}contribution{% endblock %}
+{% block content %}
+
+
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            {{ include('contribution/_item_navigation.html.twig', {'has_delete': app.user.longRole == 'ROLE_STUDENT'}) }}
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ contribution.id }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ contribution.title }}</td>
+                </tr>
+                <tr>
+                    <th>Word Document</th>
+                    <td><a target="_blank" download href="{{ uploaded_asset(contribution.documentPath) }}">{{ contribution.documentFilename }}</a></td>
+                </tr>
+                <tr>
+                    <th>Images</th>
+                    <td>
+                        {% for image in contribution.contributionImages %}
+                            <a target="_blank" download href="{{ uploaded_asset(image.imagePath) }}">
+                                <img src="{{ uploaded_asset(image.imagePath) }}" alt="" style="height: 50px; width: auto">
+                                {{ image.originalFilename }}
+                            </a>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Author</th>
+                    <td>{{ contribution.author }}</td>
+                </tr>
+                <tr>
+                    <th>Coordinator</th>
+                    <td>{{ contribution.approvedBy }}</td>
+                </tr>
+                <tr>
+                    <th>Student Comment</th>
+                    <td>{{ contribution.comment }}</td>
+                </tr>
+                <tr>
+                    <th>Coordinator Feedback</th>
+                    <td>{{ contribution.feedback }}</td>
+                </tr>
+
+                {% if contribution.approvedAt %}
+                    <tr>
+                        <th>Approved At</th>
+                        <td> {{ contribution.approvedAt ? contribution.approvedAt|date('Y-m-d H:i:s') : ''}} </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2"> <span class="text-warning">Waiting for approval</span></td>
+                    </tr>
+                {% endif %}
+
+                {% if contribution.publishedAt %}
+                    <tr>
+                        <th>Published At</th>
+                        <td> {{ contribution.publishedAt ? contribution.publishedAt|date('Y-m-d H:i:s') : ''}} </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2"> <span class="text-warning">Unpublished</span></td>
+                    </tr>
+                {% endif %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

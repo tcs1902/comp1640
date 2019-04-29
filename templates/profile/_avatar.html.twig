@@ -1,0 +1,15 @@
+<div class="col-xl-3 col-lg-4">
+    <div class="m-portlet m-portlet--full-height  ">
+        <div class="m-portlet__body">
+            <div class="m-card-profile">
+                <div class="m-card-user__pic text-center">
+                    <span class="m-type m-type--lg m--bg-danger"><span class="m--font-light">{{ app.user.displayName | first | upper }}</span></span>
+                </div>
+                <div class="m-card-profile__details">
+                    <span class="m-card-profile__name">{{ app.user.firstName }} {{ app.user.lastName }}</span>
+                    <a href="" class="m-card-profile__email m-link">{{ app.user.email }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

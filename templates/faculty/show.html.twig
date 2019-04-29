@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Faculty'}, {text: 'Detail'}] %}
+
+{% block title %}Faculty{% endblock %}
+{% block subheader_title %}faculty{% endblock %}
+{% block content %}
+
+
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            {{ include('faculty/_item_navigation.html.twig', {'has_delete': false}) }}
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ faculty.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ faculty.name }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    <a class="btn btn-success" href="{{ path('faculty_edit', {'id': faculty.id}) }}">edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

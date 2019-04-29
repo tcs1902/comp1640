@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'User'}, {text: 'Edit'}] %}
+{% set quick_actions = [{icon: 'flaticon-list', url: '#', text: 'List'}, {icon: 'flaticon-add', text: 'Edit'}] %}
+
+{% block title %}Edit User{% endblock %}
+{% block subheader_title %}Edit a user{% endblock %}
+{% block content %}
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    <div class="form-group row"><label class="col-form-label col-sm-3 required" for="user_edit_email">Email</label><div class="col-sm-9"><input disabled value="{{ form.vars.value.email }}" type="text" id="user_edit_email" name="user_edit[email]" required="required" maxlength="180" class="form-control"></div>
+                    </div>
+                    {{ form_widget(form) }}
+                    <div class="form-group row">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="flaticon-add"></i>
+                                Update
+                            </button>
+                            <button class="btn btn-default" type="reset">Reset</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

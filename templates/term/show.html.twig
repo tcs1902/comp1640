@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Term'}, {text: 'Detail'}] %}
+
+{% block title %}Term{% endblock %}
+{% block subheader_title %}term{% endblock %}
+{% block content %}
+
+
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            {{ include('term/_item_navigation.html.twig', {'has_delete': true}) }}
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ term.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ term.name }}</td>
+                </tr>
+                <tr>
+                    <th>Entry Closure</th>
+                    <td>{{ term.entryClosesAt ? term.entryClosesAt|date('Y-m-d H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Final Closure</th>
+                    <td>{{ term.finalClosesAt ? term.finalClosesAt|date('Y-m-d H:i') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    <a class="btn btn-success" href="{{ path('term_edit', {'id': term.id}) }}">edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

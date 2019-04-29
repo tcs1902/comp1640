@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-lg-8 col-xl-6 text-left">
+        <a class="btn btn-primary m--margin-bottom-10" href="{{ path('contribution_index') }}">back to list</a>
+    </div>
+    {% if(has_delete) %}
+        <div class="col-lg-8 col-xl-6 text-lg-right">
+            {{ include('contribution/_delete_form.html.twig') }}
+        </div>
+    {% endif %}
+</div>

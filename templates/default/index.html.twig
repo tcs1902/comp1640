@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Dashboard'}, {text: 'Statistic'}] %}
+
+{% block title %}Statistic{% endblock %}
+{% block subheader_title %}Dashboard{% endblock %}
+{% block content %}
+    <div class="m-content">
+        <!--begin:: Widgets/Best Sellers-->
+        <div class="m-portlet m-portlet--full-height ">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Statistical analysis
+                        </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                        {% for termItem in termCollection %}
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link {{ loop.first ? 'active' : '' }} " data-toggle="tab" href="#m_widget5_tab{{ loop.index }}_content" role="tab">
+                                    {{ termItem.term.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+
+                <!--begin::Content-->
+                <div class="tab-content">
+                    {% for termItem in termCollection %}
+                        <div class="tab-pane {{ loop.first ? 'active' : '' }}" id="m_widget5_tab{{ loop.index }}_content" aria-expanded="true">
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!--begin::m-widget5-->
+                                    <div class="m-widget5">
+                                        {% for facultyItem in termItem.facultyCollection | my_faculty(app.user) %}
+
+
+                                            <div class="m-widget5__item">
+                                                <div class="m-widget5__content">
+                                                    <div class="m-widget5__pic">
+                                                        <img class="m-widget7__img" src="../../assets/app/media/img//products/product10.jpg" alt="">
+                                                    </div>
+                                                    <div class="m-widget5__section">
+                                                        <h4 class="m-widget5__title">
+                                                            {{ facultyItem.faculty.name }}
+                                                        </h4>
+                                                        <span class="m-widget5__author">
+																		Coordinator:
+																	</span>
+                                                        <span class="m-widget5__info-author m--font-info">
+																		{{ facultyItem.coordinator }}
+																	</span>
+                                                        <div class="m-widget5__info">
+
+                                                    <span class="m-widget5__author">
+																		Students:
+																	</span>
+                                                            <span class="m-widget5__info-author m--font-info">
+																		{{ facultyItem.students | length }}
+																	</span>
+                                                            <span class="m-widget5__author">
+																		Guests:
+																	</span>
+                                                            <span class="m-widget5__info-author m--font-info">
+																		{{ facultyItem.guests | length }}
+																	</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-widget5__content">
+                                                    <div class="m-widget5__stats1">
+                                                        <span class="m-widget5__info">Contributions: {{ facultyItem.contributions | length }}</span><br>
+                                                        <span class="m-widget5__info">No comment: {{ facultyItem.withoutCommentContributions | length }}</span><br>
+                                                        <span class="m-widget5__info">No comment after 14 days: {{ facultyItem.withoutCommentAfter14daysContributions | length }}</span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        {% endfor %}
+                                    </div>
+
+                                    <!--end::m-widget5-->
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div id="statistic_pie_chart_{{ loop.index }}" style="width:300px;height:300px">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!--end::Content-->
+            </div>
+        </div>
+
+        <!--end:: Widgets/Best Sellers-->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(document).ready(function($) {
+            {% for termItem in termCollection %}
+                $.plot($("#statistic_pie_chart_{{ loop.index }}"), {{ termItem.data | json_encode | raw }}, {
+
+                    series: {
+                        pie: {
+                            show: true,
+                            radius: 1,
+                            label: {
+                                show: true,
+                                radius: 2 / 3,
+                                formatter: function (label, series) {
+                                    return '<div style="font-size:8pt;text-align:center;padding:2px;color:black;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+
+                                },
+                                threshold: 0.1
+                            }
+                        }
+                    },
+
+                    legend: {show: false}
+
+                });
+            {% endfor %}
+
+        });
+    </script>
+{% endblock %}

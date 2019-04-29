@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Contribution'}, {text: 'Edit'}] %}
+
+{% block title %}Edit Contribution{% endblock %}
+{% block subheader_title %}Edit a contribution{% endblock %}
+{% block content %}
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            {{ include('contribution/_item_navigation.html.twig', {'has_delete': true}) }}
+
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    {{ include('contribution/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+                <div class="col-sm-4">
+                    <h3>Uploaded Word Document</h3>
+                    <a target="_blank" download href="{{ uploaded_asset(contribution.documentPath) }}">{{ contribution.documentFilename }}</a>
+
+                    <h3>Images</h3>
+
+
+                    <div class="row">
+                        {% for image in contribution.contributionImages %}
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <a href="{{ uploaded_asset(image.imagePath) }}">
+                                        <img src="{{ uploaded_asset(image.imagePath) }}" alt="{{ image.originalFilename }}"
+                                             style="height: 50px; width: auto">
+                                        <div class="caption">
+                                            <p>{{ image.originalFilename }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                    <form action="{{ path('contribution_add_image', {
+                        id: contribution.id
+                    }) }}" method="POST" enctype="multipart/form-data" class="dropzone js-image-dropzone">
+                    </form>
+
+                </div>
+
+            </div>
+            {{ include('contribution/_terms_and_conditions.html.twig', {'terms': terms}) }}
+            {{ include('contribution/_term_info.html.twig', {'terms': terms}) }}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{asset('js/dropzone.js')}}"></script>
+
+    <script>
+        Dropzone.autoDiscover = false;
+
+        $(document).ready(function() {
+            initializeDropzone();
+
+        })
+
+        function initializeDropzone() {
+            var formElement = document.querySelector('.js-image-dropzone');
+            if (!formElement) {
+                return;
+            }
+
+            var dropzone = new Dropzone(formElement, {
+                paramName: 'image',
+                init: function() {
+                    this.on('error', function(file, data) {
+                        if (data.detail) {
+                            this.emit('error', file, data.detail)
+                        }
+                    })
+                }
+            });
+
+
+
+        }
+    </script>
+{% endblock %}

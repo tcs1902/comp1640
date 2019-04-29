@@ -1,0 +1,7 @@
+framework:
+    validation:
+        email_validation_mode: html5
+# config/validator/validation.yaml
+#App\Entity\Term:
+#    constraints:
+#        - Callback: [\App\Entity\Term]

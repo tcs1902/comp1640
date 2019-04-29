@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Contribution'}, {text: 'Review'}] %}
+
+{% block title %}Review Contribution{% endblock %}
+{% block subheader_title %}Review a contribution{% endblock %}
+{% block content %}
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            {{ include('contribution/_item_navigation.html.twig', {'has_delete': false}) }}
+
+            <h3>Uploaded Word Document</h3>
+            <a target="_blank" download href="{{ uploaded_asset(contribution.documentPath) }}">
+                {{ contribution.documentFilename }}
+            </a>
+
+
+            <h3>Images</h3>
+
+
+            <div class="row">
+                {% for image in contribution.contributionImages %}
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <a href="{{ uploaded_asset(image.imagePath) }}">
+                                <img src="{{ uploaded_asset(image.imagePath) }}" alt="{{ image.originalFilename }}"
+                                     style="height: 50px; width: auto">
+                                <div class="caption">
+                                    <p>{{ image.originalFilename }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    {{ include('contribution/_form.html.twig', {'button_label': 'Update Review'}) }}
+                </div>
+            </div>
+
+
+        </div>
+        {{ include('contribution/_term_info.html.twig', {'terms': terms}) }}
+
+    </div>
+{% endblock %}

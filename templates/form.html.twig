@@ -1,0 +1,34 @@
+{% use "bootstrap_4_horizontal_layout.html.twig" %}
+
+{% block form_label_errors %}{% endblock form_label_errors %}
+
+{% block form_row -%}
+    {%- if expanded is defined and expanded -%}
+        {{ block('fieldset_form_row') }}
+    {%- else -%}
+        {%- set widget_attr = {} -%}
+        {%- if help is not empty -%}
+            {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+        {%- endif -%}
+        <div class="form-group row{% if (not compound or force_error|default(false)) and not valid %} is-invalid{% endif %}">
+            {{- form_label(form) -}}
+            <div class="{{ block('form_group_class') }}">
+                {{- form_widget(form, widget_attr) -}}
+                {%- if errors|length > 0 -%}
+                    <div class="form-control-feedback">
+                        {{- form_errors(form) -}}
+                    </div>
+                {%- endif -%}
+                {{- form_help(form) -}}
+            </div>
+            {##}</div>
+    {%- endif -%}
+{%- endblock form_row %}
+
+{% block form_label_class -%}
+    col-sm-3
+{%- endblock form_label_class %}
+
+{% block form_group_class -%}
+    col-sm-9
+{%- endblock form_group_class %}

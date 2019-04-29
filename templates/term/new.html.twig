@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Term'}, {text: 'Edit'}] %}
+
+{% block title %}Create new Term{% endblock %}
+{% block subheader_title %}Create new Term{% endblock %}
+{% block content %}
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            {{ include('term/_item_navigation.html.twig', {'has_delete': false}) }}
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    {{ include('term/_form.html.twig', {'button_label': 'Create'}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

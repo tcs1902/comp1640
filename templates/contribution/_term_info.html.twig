@@ -1,0 +1,15 @@
+<div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+    <h2>Academic Term information</h2>
+    <div class="row">
+        {% for term in terms %}
+            <div class="col-lg-8 col-xl-6">
+                {# @var term \App\Entity\Term#}
+                <p><strong>{{ term.name }}</strong></p>
+                <p>Entry Closure Date: {{ term.entryClosesAt|date('Y-m-d h:i') }}</p>
+                <p>Final Closure Date: {{ term.finalClosesAt|date('Y-m-d h:i') }}</p>
+                <hr>
+            </div>
+
+        {% endfor %}
+    </div>
+</div>

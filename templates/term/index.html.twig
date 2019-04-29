@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{text: 'Term'}, {text: 'List'}] %}
+
+{% block title %}List Term{% endblock %}
+{% block subheader_title %}List all terms{% endblock %}
+
+{% block content %}
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            <div class="table-responsive m-datatable m-datatable--default m--padding-bottom-50">
+                <div class="row">
+                    <div class="col-lg-8 col-xl-6">
+                        <a class="btn btn-primary m--margin-bottom-10" href="{{ path('term_new') }}">New Term</a>
+                    </div>
+                </div>
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Entry Closure</th>
+                        <th>Final Closure</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for term in pager.currentPageResults %}
+                        {# @var term \App\Entity\Term #}
+                        <tr>
+                            <td>{{ term.id }}</td>
+                            <td>{{ term.name }}</td>
+                            <td>{{ term.entryClosesAt ? term.entryClosesAt|date('Y-m-d H:i') : '' }}</td>
+                            <td>{{ term.finalClosesAt ? term.finalClosesAt|date('Y-m-d H:i') : '' }}</td>
+                            <td>
+                                <a href="{{ path('term_show', {'id': term.id}) }}">show</a>
+                                <a href="{{ path('term_edit', {'id': term.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% include 'pager.html.twig' with {pager: pager} %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

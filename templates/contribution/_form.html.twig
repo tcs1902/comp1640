@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<div class="form-group row">
+    <div class="col-sm-9">
+        <a href="javascript:;" data-toggle="modal" data-target="#terms-and-conditions-modal">
+            Terms and Conditions
+        </a>
+    </div>
+</div>
+            <button class="btn btn-primary" type="submit">
+                <i class="flaticon-edit"></i>
+                {{ button_label|default('Save') }}
+            </button>
+{{ form_end(form) }}

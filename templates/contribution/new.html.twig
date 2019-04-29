@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Contribution'}, {text: 'Edit'}] %}
+
+{% block title %}Create new Contribution{% endblock %}
+{% block subheader_title %}Create new Contribution{% endblock %}
+{% block content %}
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            {{ include('contribution/_item_navigation.html.twig', {'has_delete': false}) }}
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    {{ include('contribution/_form.html.twig', {'button_label': 'Create'}) }}
+                </div>
+            </div>
+        </div>
+        {{ include('contribution/_terms_and_conditions.html.twig', {'terms': terms}) }}
+
+        {{ include('contribution/_term_info.html.twig', {'terms': terms}) }}
+
+    </div>
+{% endblock %}

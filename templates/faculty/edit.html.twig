@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: '#', text: 'Faculty'}, {text: 'Edit'}] %}
+
+{% block title %}Edit Faculty{% endblock %}
+{% block subheader_title %}Edit a faculty{% endblock %}
+{% block content %}
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            {{ include('faculty/_item_navigation.html.twig', {'has_delete': false}) }}
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    {{ include('faculty/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

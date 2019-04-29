@@ -1,0 +1,60 @@
+{% set current_route = app.request.attributes.get('_route') %}
+{% set current_route_params = app.request.query %}
+<div class="m-datatable__pager">
+    <ul class="m-datatable__pager-nav">
+        <li>
+            <a href="{{ pager.hasPreviousPage ? path(current_route, current_route_params|merge({page: 1})) : 'javascript:;' }}"
+               class="m-datatable__pager-link m-datatable__pager-link--first{% if not pager.hasPreviousPage %} m-datatable__pager-link--disabled{% endif %}"
+               title="First">
+                <i class="la la-angle-double-left"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{{ pager.hasPreviousPage ? path(current_route, current_route_params|merge({page: pager.currentPage - 1})) : 'javascript:;' }}"
+               class="m-datatable__pager-link m-datatable__pager-link--prev{% if not pager.hasPreviousPage %} m-datatable__pager-link--disabled{% endif %}"
+               title="Previous">
+                <i class="la la-angle-left"></i>
+            </a>
+        </li>
+        {% for i in 1..pager.nbPages %}
+            <li>
+                <a href="{{ path(current_route, current_route_params|merge({page: i})) }}"
+                   class="m-datatable__pager-link m-datatable__pager-link-number{% if i == pager.currentPage %} m-datatable__pager-link--active{% endif %}"
+                   title="{{ i }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+        <li>
+            <a href="{{ pager.hasNextPage ? path(current_route, current_route_params|merge({page: pager.currentPage + 1})) : 'javascript:;' }}"
+               class="m-datatable__pager-link m-datatable__pager-link--next{% if not pager.hasNextPage %} m-datatable__pager-link--disabled{% endif %}"
+               title="Next">
+                <i class="la la-angle-right"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{{ pager.hasNextPage ? path(current_route, current_route_params|merge({page: pager.nbPages})) : 'javascript:;' }}"
+               class="m-datatable__pager-link m-datatable__pager-link--last{% if not pager.hasNextPage %} m-datatable__pager-link--disabled{% endif %}"
+               title="Last">
+                <i class="la la-angle-double-right"></i>
+            </a>
+        </li>
+    </ul>
+    <div class="m-datatable__pager-info">
+        <div class="dropdown bootstrap-select m-datatable__pager-size" style="width: 70px">
+            <button type="button" class="btn btn-light dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="filter-option">
+                                    <span class="filter-option-inner">{{ pager.maxPerPage }}</span>
+                                </span>
+            </button>
+            <div class="dropdown-menu">
+                {% for size in [10, 20, 30, 50] %}
+                    {% if size != pager.maxPerPage %}
+                        <a class="dropdown-item"
+                           href="{{ path(current_route, current_route_params|merge({page: 1, size: size})) }}">{{ size }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <span class="m-datatable__pager-detail">Displaying {{ pager.currentPageOffsetStart }} - {{ pager.currentPageOffsetEnd }} of {{ pager.nbResults }} records</span>
+    </div>
+</div>

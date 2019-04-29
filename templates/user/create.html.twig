@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: path('user_index'), text: 'User'}, {text: 'Create'}] %}
+{% set quick_actions = [{icon: 'flaticon-list', url: path('user_index'), text: 'List'}, {icon: 'flaticon-add', text: 'Create'}] %}
+
+{% block title %}Create User{% endblock %}
+{% block subheader_title %}Create a new user{% endblock %}
+{% block content %}
+    <div class="m-content">
+        <div class="m-portlet m-portlet--full-height m-portlet--tabs m--padding-30">
+            <div class="row">
+                <div class="col-lg-8 col-xl-6">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    {{ form_widget(form) }}
+                    <div class="form-group row">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="flaticon-add"></i>
+                                Create
+                            </button>
+                            <button class="btn btn-default" type="reset">Reset</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $userCreateFacultyFormGroup = $('#user_create_faculty').closest('.form-group');
+        $('#user_create_roles').on('change', function(e) {
+            var role = this.value;
+            if(role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' || role == 'ROLE_COORDINATOR') {
+                $userCreateFacultyFormGroup.val('').hide();
+            } else {
+                $userCreateFacultyFormGroup.val('').show();
+            }
+
+        })
+
+    </script>
+{% endblock %}

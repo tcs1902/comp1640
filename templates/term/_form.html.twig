@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+            <button class="btn btn-primary" type="submit">
+                <i class="flaticon-edit"></i>
+                {{ button_label|default('Save') }}
+            </button>
+            <button class="btn btn-default" type="reset">Reset</button>
+{{ form_end(form) }}

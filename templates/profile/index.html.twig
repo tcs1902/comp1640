@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% set breadcrumbs = [{url: path('profile'), text: 'Profile'}, {text: 'My Profile'}] %}
+
+{% block title %}My Profile{% endblock %}
+{% block subheader_title %}My Profile{% endblock %}
+{% block content %}
+    <!-- END: Subheader -->
+    <div class="m-content">
+        <div class="row">
+            {{ include('profile/_avatar.html.twig') }}
+            <div class="col-xl-9 col-lg-8">
+                <div class="m-portlet m-portlet--full-height m-portlet--tabs  ">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" href="#m_user_profile_tab_1" role="tab">
+                                        <i class="flaticon-share m--hide"></i>
+                                        My Profile
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" href="{{ path('profile_change_password') }}" role="tab">
+                                        <i class="flaticon-share m--hide"></i>
+                                        Change Password
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="m_user_profile_tab_1">
+                            <div class="m-portlet__body">
+                                {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                <div class="form-group row">
+                                    <div class="offset-sm-3 col-sm-9">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="flaticon-edit"></i>
+                                            Update
+                                        </button>&nbsp;&nbsp;
+                                        <button class="btn btn-primary" type="reset">
+                                            <i class="flaticon-refresh"></i>
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
